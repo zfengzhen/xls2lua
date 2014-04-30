@@ -6,8 +6,8 @@ use [python xlrd](https://pypi.python.org/pypi/xlrd)
 building.xls  
 <table>
     <tr>
-        <td>**ID**</td>
-        <td>**Name**</td>
+        <td>ID</td>
+        <td>Name</td>
         <td>UseMoney</td>
         <td>UseFood</td>
         <td>IsInit</td>
