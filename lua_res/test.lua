@@ -15,19 +15,18 @@ add_sum_weight(item_container)
 
 math.randomseed(os.time())
 
-function lottery(gift_set)
+function lottery(gift_set_data)
     local lottery_items = {}
-    for i=1, #(gift_set.all_type) do
-        for j=1, #(gift_set.all_type[i]) do
+        for j=1, #gift_set_data do
             local rand_num = math.random(100)
-            print("item_container[" .. gift_set.all_type[i][j].item_container_id ..
-                "] rand_num = " .. rand_num .. ", weight = " .. gift_set.all_type[i][j].item_container_weight)
-            if rand_num <= gift_set.all_type[i][j].item_container_weight then
-                print("\tget item_container[" .. gift_set.all_type[i][j].item_container_id .. "]")
-                local item_container_name = item_container.type_map[gift_set.all_type[i][j].item_container_id]
+            print("item_container[" .. gift_set_data[j].item_container_id ..
+                "] rand_num = " .. rand_num .. ", weight = " .. gift_set_data[j].item_container_weight)
+            if rand_num <= gift_set_data[j].item_container_weight then
+                print("\tget item_container[" .. gift_set_data[j].item_container_id .. "]")
+                local item_container_name = item_container.type_map[gift_set_data[j].item_container_id]
                 local cur_item_container = item_container[item_container_name]
                 local rand_num = math.random(cur_item_container.sum_weight)
-                print("\titem_container[" .. gift_set.all_type[i][j].item_container_id ..
+                print("\titem_container[" .. gift_set_data[j].item_container_id ..
                     "] rand_num = " .. rand_num .. ", sum_weight = " .. cur_item_container.sum_weight)
                 local sum_item_weight = 0
                 for k=1, #(cur_item_container) do
@@ -43,11 +42,11 @@ function lottery(gift_set)
                 end
             end
         end
-    end
     return lottery_items
 end
 
-local lottery_items = lottery(gift_set)
+local lottery_items = lottery(gift_set.gift_set_1001s)
+print("\n\nitem_drops:")
 for i=1, #lottery_items do
     print(lottery_items[i])
 end
