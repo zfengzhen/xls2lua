@@ -2,12 +2,12 @@ local gift_set = require("gift_set")
 local item_container = require("item_container")
 
 function add_sum_weight(item_container)
-    for i=1, #(item_container.type) do
+    for i=1, #(item_container.all_type) do
         local sum_weight = 0
-        for j=1, #(item_container.type[i]) do
-            sum_weight = sum_weight + item_container.type[i][j].item_weight  
+        for j=1, #(item_container.all_type[i]) do
+            sum_weight = sum_weight + item_container.all_type[i][j].item_weight  
         end
-        item_container.type[i].sum_weight = sum_weight
+        item_container.all_type[i].sum_weight = sum_weight
     end
 end
 
@@ -17,17 +17,17 @@ math.randomseed(os.time())
 
 function lottery(gift_set)
     local lottery_items = {}
-    for i=1, #(gift_set.type) do
-        for j=1, #(gift_set.type[i]) do
+    for i=1, #(gift_set.all_type) do
+        for j=1, #(gift_set.all_type[i]) do
             local rand_num = math.random(100)
-            print("item_container[" .. gift_set.type[i][j].item_container_id ..
-                "] rand_num = " .. rand_num .. ", weight = " .. gift_set.type[i][j].item_container_weight)
-            if rand_num <= gift_set.type[i][j].item_container_weight then
-                print("\tget item_container[" .. gift_set.type[i][j].item_container_id .. "]")
-                local item_container_name = item_container.type_map[gift_set.type[i][j].item_container_id]
+            print("item_container[" .. gift_set.all_type[i][j].item_container_id ..
+                "] rand_num = " .. rand_num .. ", weight = " .. gift_set.all_type[i][j].item_container_weight)
+            if rand_num <= gift_set.all_type[i][j].item_container_weight then
+                print("\tget item_container[" .. gift_set.all_type[i][j].item_container_id .. "]")
+                local item_container_name = item_container.type_map[gift_set.all_type[i][j].item_container_id]
                 local cur_item_container = item_container[item_container_name]
                 local rand_num = math.random(cur_item_container.sum_weight)
-                print("\titem_container[" .. gift_set.type[i][j].item_container_id ..
+                print("\titem_container[" .. gift_set.all_type[i][j].item_container_id ..
                     "] rand_num = " .. rand_num .. ", sum_weight = " .. cur_item_container.sum_weight)
                 local sum_item_weight = 0
                 for k=1, #(cur_item_container) do
