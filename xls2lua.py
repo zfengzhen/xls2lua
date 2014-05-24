@@ -155,13 +155,9 @@ def format_str(v):
 		s = "%s "%(s)
 	return s
 
-def write_to_lua_script(excel):
-	try:
-  		os.mkdir("lua_res")
-	except OSError as exc: 
-		pass
+def write_to_lua_script(excel, output_path):
 	for (sheet_name, sheet) in excel["data"].items():
-		outfp = open("./lua_res/" + sheet_name + ".lua", 'w')
+		outfp = open(output_path + "/" + sheet_name + ".lua", 'w')
 		create_time = time.strftime("%a %b %d %H:%M:%S %Y", time.gmtime(time.time()))
 		outfp.write(SCRIPT_HEAD % (excel["filename"], create_time)) 
 		outfp.write("local " + sheet_name + " = {}\n")
@@ -216,9 +212,10 @@ def write_to_lua_script(excel):
 
 def main():
 	import sys
-	if len(sys.argv) < 2:
-		sys.exit('''usage: xls2lua.py excel_name)''')
+	if len(sys.argv) < 3:
+		sys.exit('''usage: xls2lua.py excel_name output_path)''')
 	filename = sys.argv[1]
+	output_path = sys.argv[2]
 	t, ret, errstr = make_table(filename)
 	if ret != 0:
 		print "error: " + errstr
@@ -226,7 +223,7 @@ def main():
 		print "res:"
 		print(t)
 		print "success!!!"
-	write_to_lua_script(t)
+	write_to_lua_script(t, output_path)
 
 if __name__=="__main__":
 	main()
